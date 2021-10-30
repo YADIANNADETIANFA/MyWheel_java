@@ -4,6 +4,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/SpringBootWheel/pom.xml" />
+        <option value="$PROJECT_DIR$/MybatisPlusWheel/pom.xml" />
       </list>
     </option>
   </component>

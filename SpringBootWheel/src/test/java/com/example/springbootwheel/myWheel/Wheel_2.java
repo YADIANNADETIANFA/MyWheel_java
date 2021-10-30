@@ -20,16 +20,16 @@ public class Wheel_2 {
     @Test
     public void test1() throws Exception {
         User user = new User();
-        user.setName(String.valueOf(Math.random()*10));
         String salt = UUID.randomUUID().toString().substring(0, 5);
-        user.setSalt(salt);
-        user.setHeadUrl("2333");
-        user.setPassword("233");
-        user.setQq("898");
-        user.setBirth("233");
-        user.setSex("F");
-        user.setType("23");
-        user.setSigned("25");
+        user.setName(String.valueOf(Math.random()*10))
+                .setSalt(salt)
+                .setHeadUrl("886")
+                .setPassword("233")
+                .setQq("898")
+                .setBirth("233")
+                .setSex("F")
+                .setType("23")
+                .setSigned("25");
         int res1 = userDAO.addUser(user);   //返回影响数据条数
         System.out.println(res1);
         if (res1 <= 0) {

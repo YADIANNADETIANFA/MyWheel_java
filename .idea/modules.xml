@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/MyWheel.iml" filepath="$PROJECT_DIR$/.idea/MyWheel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MybatisPlusWheel/MybatisPlusWheel.iml" filepath="$PROJECT_DIR$/MybatisPlusWheel/MybatisPlusWheel.iml" />
       <module fileurl="file://$PROJECT_DIR$/SpringBootWheel/SpringBootWheel.iml" filepath="$PROJECT_DIR$/SpringBootWheel/SpringBootWheel.iml" />
     </modules>
   </component>
