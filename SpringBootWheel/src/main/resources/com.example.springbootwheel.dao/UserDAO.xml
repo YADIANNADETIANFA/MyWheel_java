@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springbootwheel.dao.UserDAO">
+
+    <!-- sql标签的内容，通过include来引用 -->
+    <!-- head_url字段来源于数据库表字段，数据库表字段为head_url，而非headUrl -->
+    <sql id="table">wheel_test_user</sql>
+    <sql id="insertFields">name, password, salt, head_url, qq, role, permission, birth, sex, type, signed</sql>
+    <sql id="selectFields">id, name, password, salt, head_url, qq, role, permission, birth, sex, type, signed</sql>
+
+    <insert id="addUser" parameterType="com.example.springbootwheel.model.User">
+        INSERT INTO
+        <include refid="table"/>
+        ( <include refid="insertFields"/> )
+        VALUES
+        ( #{name}, #{password}, #{salt}, #{headUrl}, #{qq}, #{role}, #{permission}, #{birth}, #{sex}, #{type}, #{signed} )
+    </insert>
+
+    <select id="selectById" parameterType="int" resultType="com.example.springbootwheel.model.User">
+        SELECT
+        <include refid="selectFields"/>
+        FROM
+        <include refid="table"/>
+        WHERE
+        id = #{id}
+    </select>
+
+    <select id="selectByName" parameterType="String" resultType="com.example.springbootwheel.model.User">
+        SELECT
+        <include refid="selectFields"/>
+        FROM
+        <include refid="table"/>
+        WHERE
+        name = #{name}
+    </select>
+
+    <!-- 动态sql if -->
+    <select id="selectByIdAndUrl" parameterType="map" resultType="com.example.springbootwheel.model.User">
+        SELECT
+        <include refid="selectFields"/>
+        FROM
+        <include refid="table"/>
+        WHERE id = #{id}
+        <if test="headUrl != null">
+             AND head_url = #{headUrl}
+        </if>
+    </select>
+
+    <!-- like模糊查询，可防止sql注入 -->
+    <delete id="deleteUser" parameterType="String">
+        DELETE FROM
+        <include refid="table"/>
+        WHERE
+        name LIKE CONCAT ('%', #{name}, '%')
+    </delete>
+
+    <update id="updateUser" parameterType="map">
+        UPDATE
+        <include refid="table"/>
+        SET
+        qq = #{qq}
+        WHERE
+        id = #{id}
+    </update>
+
+    <!-- 动态sql foreach -->
+    <select id="selectUsersBySalts" resultType="com.example.springbootwheel.model.User">
+        SELECT
+        <include refid="selectFields"/>
+        FROM
+        <include refid="table"/>
+        WHERE
+        <if test="salts.size() != 0">
+            salt IN
+            <foreach item="item" collection="salts" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        ORDER BY id DESC
+        LIMIT #{limitFirst}, #{limitSec}
+    </select>
+
+</mapper>
