@@ -10,7 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @SpringBootTest
@@ -134,6 +136,28 @@ public class TestUserDAO {
 
         List<User> res2 = userDAO.selectSelfByXmlWithWrapper(queryWrapper);    //如果不想限制任何条件，不可传参为null，需传一个空的queryWrapper
         System.out.println(res2);
+
+        List<User> res3 = userDAO.selectSelfByAnnoWithoutWrapper(); //如果不想限制任何条件，也可直接不使用Wrapper条件构造器
+        System.out.println(res3);
+        List<User> res4 = userDAO.selectSelfByXmlWithoutWrapper();  //如果不想限制任何条件，也可直接不使用Wrapper条件构造器
+        System.out.println(res4);
+
+        //自定义分页
+        Page<User> page = new Page<>(1, 3);
+        IPage<User> iPage = userDAO.selectSelfPageWithWrapper(page, queryWrapper);
+        System.out.println("总页数： " + iPage.getPages());
+        System.out.println("总记录数： " + iPage.getTotal());
+        List<User> userList = iPage.getRecords();
+        userList.forEach(System.out::println);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", 52);
+        map.put("headUrl", "2333");
+        IPage<User> iPage2 = userDAO.selectSelfPageWithoutWrapper(page, map);
+        System.out.println("总页数： " + iPage2.getPages());
+        System.out.println("总记录数： " + iPage2.getTotal());
+        List<User> userList2 = iPage2.getRecords();
+        userList2.forEach(System.out::println);
     }
 }
 

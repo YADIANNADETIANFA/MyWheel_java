@@ -15,4 +15,30 @@
         ${ew.customSqlSegment}
     </select>
 
+    <select id="selectSelfByXmlWithoutWrapper" resultType="com.example.mybatispluswheel.model.User">
+        SELECT
+        <include refid="selectFields"/>
+        FROM
+        <include refid="table"/>
+    </select>
+
+    <select id="selectSelfPageWithWrapper" resultType="com.example.mybatispluswheel.model.User">
+        SELECT
+        <include refid="selectFields"/>
+        FROM
+        <include refid="table"/>
+        ${ew.customSqlSegment}
+    </select>
+
+    <select id="selectSelfPageWithoutWrapper" parameterType="map" resultType="com.example.mybatispluswheel.model.User">
+        SELECT
+        <include refid="selectFields"/>
+        FROM
+        <include refid="table"/>
+        WHERE id = #{map.id}
+        <if test="map.headUrl != null">
+            AND head_url = #{map.headUrl}
+        </if>
+    </select>
+
 </mapper>
